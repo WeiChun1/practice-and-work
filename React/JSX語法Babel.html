@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>component</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style type="text/css">
+        .head{font-size:12pt; font-weight: bold;}
+    </style>
+    <script type="text/babel">
+        class Myhead extends React.Component {
+            render() {
+                //return React.createElement("H1",{className:head}, "Hello World"+this.props.level)
+                return <h1 className="head" style={{color:this.props.color}}>Hello World {this.props.level}</h1>
+            }
+        }
+        class MyheadList extends React.Component {
+            render() {
+                return <div>
+                    <Myhead level="1" color="red"/>
+                    <Myhead level="2" color="blue"/>
+                    <Myhead level="3" color="yellow"/>
+                </div>
+            }
+        }
+        window.addEventListener("load", () => {
+            let element = <MyheadList level="2" /> // React.createElement(Myhead,{level:2})
+            ReactDOM.render(
+                element, document.body
+            )
+        })
+
+
+    </script>
+</head>
+
+</html>

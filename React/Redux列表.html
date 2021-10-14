@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Redux</title>
+    <script src="https://unpkg.com/redux@4.1.1/dist/redux.min.js"></script>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        class Myhead extends React.Component{
+            constructor(props){
+                super(props)
+            }
+            render(){
+                return <li>Hello World {this.props.level}</li>
+            }
+        }
+        class MyheadList extends React.Component{
+            constructor(props){
+                super(props)
+                this.state=store.getState()
+            }
+            render(){
+                let cells=[]
+                for(let i=0;i<this.state.max;i++){
+                    cells.push(<Myhead level={i}/>)
+                }
+                return <ul onClick={this.update.bind(this)}>{cells}</ul>
+            }       
+            update(){
+                store.dispatch({
+                    type:"ChangeMax",
+                    max:5
+                })
+            }
+            refresh(){
+                this.setState(store.getState())
+            }
+            
+            componentDidMount(){
+                this.unsubscribe=store.subscribe(this.refresh.bind(this))
+            }
+            
+
+            componetWillUnmount(){
+                this.unsubscribe()
+            }
+        }
+        let store
+        let reducer = (state, action) =>{
+            switch(action.type){
+                case "ChangeMax":
+                    return {max:action.max}
+                default:
+                    return state
+            }
+        }
+        window.addEventListener("load",()=>{
+            store=Redux.createStore(reducer, {max:3})
+            ReactDOM.render(<MyheadList/>, document.body)
+        })
+    </script>
+</head>
+
+</html>

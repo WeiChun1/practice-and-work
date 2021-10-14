@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>test13</title>
+        <script type="text/javascript">
+            function getData(pageName){
+                var req=new XMLHttpRequest()
+                //req.open("get", "http://127.0.0.1:2045/"+'popular.html')
+                //req.header("Access-Control-Allow-Origin","*")
+                var url = "http://127.0.0.1:8888/"+ "test5.html"
+                req.open("Get", url) //讀不到檔案
+                req.onload = function(){
+                    var content = document.getElementById("content")
+                    content.innerHTML=this.responseText
+                }
+                req.send()
+            }
+        </script>
+    </head>
+    <body onload="getData('popular.html')">
+        <div>
+            <span onclick="getData('popular.html')">熱門</span>
+            <span onclick="getData('latest.html')">最新</span>
+        </div>
+        <hr/>
+        <div id="content"></div>
+    </body>
+</html>

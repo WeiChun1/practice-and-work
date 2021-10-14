@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Redux</title>
+    <script src="https://unpkg.com/redux@4.1.1/dist/redux.min.js"></script>
+    <script src="https://unpkg.com/react@17/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style type="text/css">
+        .switch {
+            width: 60px;
+            height: 30px;
+            border-radius: 15px;
+            background-color: #cccccc;
+        }
+        .switch>.btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 15px;
+            background-color: #444444;
+        }
+        .switch-on{
+            background-color: #88bb88;
+        }
+        .switch-on>.btn{
+            background-color: #448844;
+            margin-left: 30px;
+        }
+    </style>
+    <script type="text/babel">
+        class Button extends React.Component {
+            render() {
+                return <div className="btn"></div>
+            }
+        }
+        class Switch extends React.Component {
+            constructor(props) {
+                super(props)
+                this.state = store.getState()
+            }
+            render() {
+                return <div className={"switch" + (this.state.on ? " switch-on" : "")}
+                    onClick={this.update.bind(this)}>
+                    <Button></Button>
+                    </div>
+            }
+            update() {               
+                store.dispatch({
+                    type:"Change"
+                })
+            }
+            refresh(){  
+                this.setState(store.getState())
+            }
+            componentDidMount(){
+                this.unsubscribe = store.subscribe(this.refresh.bind(this))
+            }
+            componenetWillUnmount(){
+                this.unsubscribe()
+            }
+        }
+
+
+        let store
+        let reducer = (state, action) => {
+            switch (action.type) {
+                case "Change":
+                    return {on:!state.on}
+                default:
+                    return state
+            }
+        }
+        
+        window.addEventListener("load", () => {
+            store = Redux.createStore(reducer, { on: false})
+            ReactDOM.render(<Switch />, document.body)
+        })
+    </script>
+</head>
+
+</html>

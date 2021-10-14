@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>視窗對話框</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/redux@4.1.1/dist/redux.min.js"></script>
+    <style type="text/css">
+        .dialog {
+            position: fixed;
+            top: 100px;
+            left: 50%;
+            transform: translate(-100px, 0px);
+            border-radius: 5px;
+            border-width: bold;
+            width: 240px;
+            padding: 10px;
+            border: 1px solid #000000;
+            background-color: #eeeeee;
+            box-shadow: 0px 0px 10px #000000;
+            display: none
+        }
+        .dialog>.close{
+            position: absolute;
+            right:0px;
+            top:0px;
+            cursor:pointer
+        }
+    </style>
+    <script type="text/babel">
+        class Dialog1 extends React.Component {
+            render() {
+                return <div id="dialog" className="dialog">
+                    在這裡面加入對話框中的內容<br/>
+                    例如 Email:abc@anc.com
+                    <div className="close" onClick={this.close.bind(this)}>X</div>
+                </div>
+            }
+            close() {
+                dialog.style.display = "none"
+            }
+        }
+        class Dialog extends React.Component {
+            render() {
+                return <button onClick={this.press.bind(this)} >按下此鍵</button>
+            }
+            press() {
+                dialog.style.display = "block"
+            }
+        }
+        window.addEventListener("load", () => {
+            ReactDOM.render(<Dialog />, document.getElementById("Dialog"))
+            ReactDOM.render(<Dialog1 />, document.getElementById("key"))
+        })
+    </script>
+</head>
+
+<body>
+    <div id="Dialog"></div>
+    <div id="key"></div>
+</body>
+
+</html>

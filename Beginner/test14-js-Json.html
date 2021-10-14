@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <titile>test14</titile>
+        <script>
+            var point = {
+                "x":3,
+                "y":4,
+                "get":function(){
+                    alert(this.x+" "+this.y)
+                }
+            }
+            //console.log(point)
+            var jsonstr = JSON.stringify(point)
+            console.log(jsonstr)
+            var plainObj = JSON.parse(jsonstr)
+            console.log(plainObj)
+            alert(plainObj.x)
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>

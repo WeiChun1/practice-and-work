@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>component</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+
+    <script>
+        class MyHead extends React.Component {
+            render() {
+                return React.createElement("H" + this.props.level, null, "Hello Component")
+            }
+        }
+        class MyHeadList extends React.Component {
+            constructor(props) {
+                super(props)
+                this.state = { maxlevel: props.start }
+
+                window.setTimeout(() => {
+                    //this.setState({maxlevel:7})
+                    this.setState((currentState, currentProps) => ({ maxlevel: currentState.maxlevel + 1 }))
+                }, 500)
+            }
+            componentWillMount() {
+                this.intervalID = window.setInterval(() => {
+                    this.setState((currentState, currentProps) => {
+                        if (currentState.maxlevel > currentProps.end) {
+                            return currentState
+                        }
+                        else {
+                            return { maxlevel: currentState.maxlevel + 1 }
+                        }
+                    })
+                }, 1000)
+            }
+            componentWillUnmount() {
+                window.clearInterval(this.intervalID)
+            }
+            render() {
+                let heads = []
+                let head
+                for (let i = 1; i < this.state.maxlevel; i++) {
+                    head = React.createElement(MyHead, { level: i })
+                    heads.push(head)
+                }
+                return React.createElement("DIV", null, heads)
+            }
+        }
+        window.addEventListener("load", () => {
+            let reactElement = React.createElement(MyHeadList, { start: 3, end: 5 })
+            ReactDOM.render(
+                reactElement, document.body
+            )
+        }
+        )
+    </script>
+</head>
+
+<body id="root">
+
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>事件處理</title>
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style type="text/css">
+        .head-3{font-size:1.2em; font-weight: bold;}
+    </style>
+    <script type="text/babel">
+        
+        class MyHead extends React.Component{
+            constructor(props){
+                super(props)
+                this.state={color:"red"}
+            }
+            render(){
+                return <div className={"head-"+this.props.level} 
+                style={{color:this.state.color}}
+                onClick={this.clickHandler.bind(this)}
+                onMouseOver={this.mouseOverHandler.bind(this)}
+                onMouseOut={this.mouseOutHandler.bind(this)}>Hello Component</div>
+            }
+            mouseOutHandler(e){
+                this.setState({color:"purple"})
+            }
+            mouseOverHandler(e){
+                this.setState({color:"orange"})
+            }
+            clickHandler(e){
+                if (this.state.color == "red"){
+                    this.setState({color:"blue"})
+                }
+                else{
+                    this.setState({color:"red"})
+                }
+            }
+        }
+        
+        window.addEventListener("load", ()=>{
+            ReactDOM.render(<MyHead level="3"/>, document.body)
+        })
+    </script>
+</head>
+
+</html>

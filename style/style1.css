@@ -1,0 +1,36 @@
+nav{
+  display: flex;
+}
+nav>.logo{
+  flex: none;width: 200px;
+  background-color: orange;
+}
+nav>.menu{
+  flex: auto;
+  background-color: chartreuse;
+}
+nav>.user{
+  flex: none;width: 200px;
+  background-color: palegoldenrod;
+}
+main{
+  display: flex;flex-wrap: wrap;
+  justify-content: center;
+  background-color: gray;
+}
+main>.item{
+  flex: none;
+  width: 300px; margin: 15px;
+  text-align: center;
+  background-color: burlywood;
+}
+@media (max-width:1200px){
+  main>.item{
+    width: 45%;
+  }
+}
+@media (max-width:500px){
+  main>.item{
+    width: 90%;
+  }
+}

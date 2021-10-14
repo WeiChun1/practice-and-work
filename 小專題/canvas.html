@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>canvas</title>
+        <script type="text/javascript">
+        window.onload=function(){
+            var cvs=document.getElementById("cvs")
+            var ctx=cvs.getContext("2d")
+            //填滿
+            ctx.fillStyle="red"
+            ctx.globalAlpha=0.5
+            ctx.fillRect(20,20,500,500)
+            //描邊
+            ctx.strokeStyle="#ffffff"
+            ctx.globalAlpha=1
+            ctx.strokeRect(50,30,100,300)
+            //路徑
+            ctx.strokeStyle="#008800"
+            ctx.beginPath()
+            ctx.moveTo(200,100)    //移動當前所在位置
+            ctx.lineTo(500,200)
+            ctx.closePath()
+            ctx.stroke()
+        }
+        </script>
+    </head>
+    <body>
+        <canvas id="cvs" width="800" height="600" style="border: 1px solid #777777"></canvas>
+    </body>
+</html>
