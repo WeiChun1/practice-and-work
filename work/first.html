@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/redux@4.1.1/dist/redux.min.js"></script>
+    <style type="text/css">
+        .table {
+            border-radius: 3%;
+            width: 600px;
+            height: 900px;
+            position: fixed;
+            margin: auto;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            border: 5px solid #FFFFFF;
+            background-color: #F0F0F0;
+        }
+
+        body {
+            background-color: #1f1f23;
+        }
+
+        .list {
+            border-radius: 5px;
+            border: 1px solid #000000;
+            width: 40%;
+            height: 400px;
+            background-color: #FFFFFF;
+            margin: 5%;
+            overflow: auto;
+        }
+
+        .top {
+            background-color: #B8C1C8;
+            border-bottom: 1px solid #000000;
+            position: sticky;
+        }
+
+        .box {
+            border-right: 1px solid #000000;
+            width: 60px;
+            text-align: center;
+        }
+
+        .box_name {
+            border-right: 1px solid #000000;
+            width: 120px;
+            text-align: center;
+        }
+
+        .box:last-child {
+            border: none
+        }
+
+        .file {
+            position: relative;
+            top: 10px;
+            left: 30px
+        }
+
+        input[type="file"] {
+            color: transparent;
+        }
+    </style>
+    <script type="text/babel">
+
+        class List extends React.Component {
+            render() {
+                let member = []
+                return <div className="list">
+                    <table className="top" align="center">
+                        <thead>
+                            <tr>
+                                <td className="box">No.</td>
+                                <td className="box_name">name</td>
+                                <td className="box">Tier</td>
+                            </tr>
+                        </thead>
+
+                    </table>
+                </div>
+            }
+        }
+        class Member extends React.Component {
+            render() {
+                return <table onChange={this.add.bind(this)}>
+                    <tbody>
+                        <tr>
+                            <td className="box">{this.props.number}</td>
+                            <td className="box_name">{this.props.name}</td>
+                            <td className="box">{this.props.Tier}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            }
+            add() {
+                this.setState({
+                    number: number + 1
+                })
+            }
+        }
+        class Member_input extends React.Component {
+            render() {
+                return <input type="file" name="file" id="file" className="file" />
+            }
+        }
+        class Members extends React.Component {
+            constructor(props) {
+                super(props)
+                this.state = {
+                    number: 0
+                }
+            }
+            render() {
+                let count = 0
+                document.getElementById("file").onchange = function () {
+                    let file = this.files[0];
+                    let reader = new FileReader();
+                    let members = []
+                    reader.onload = function (progressEvent) {
+                        let lines = this.result.split('\n');
+                        for (let line = 0; line < file.length; line++) {
+                            if (lines[line].match(/\w/)) {
+                                file_word[count] = lines[line].slice(0, -1)
+                                count++
+                            }
+                        }
+                    };
+                    reader.readAsText(file);
+                };
+                addRow = (names, number, tier) => {
+                    let number;
+                    let name;
+                    let tier;
+                    var tdArr = new Array();
+                    let tbodyObj = document.getElementsByTagName("tbody")[0]
+                    let trObj = document.createElement("tr")
+                    tbodyObj.appendChild(trObj)
+                    //建立5個td
+                    for (let i = 0; i < 3; i++) {
+                        let tdObj = document.createElement("td")
+                        trObj.appendChild(tdObj)
+                        //建立input輸入框物件
+                        let inputObj = document.createElement("input")
+                        //設定input物件的id屬性
+                        inputObj.setAttribute("id", i)
+                        //為每一個輸入框新增一個失去焦點事件
+                        inputObj.addEventListener("blur", function () {
+                            switch (this.id) {
+                                case "0":
+                                    id = this.value
+                                    break
+                                case "1":
+                                    name = this.value
+                                    break
+                                case "2":
+                                    age = this.value
+                                    break
+                            }
+                        });
+                        //隱藏未點選輸入時的input邊框
+                        inputObj.style.border = "0";
+                        //隱藏點選輸入時的邊框
+                        inputObj.style.outline = "none";
+                        //設定輸入框寬度
+                        inputObj.style.width = "80px";
+                        //設定輸入框高度
+                        inputObj.style.height = "25px";
+                        //設定輸入框的外邊距為0
+                        inputObj.style.margin = "0";
+                        //將td新增
+                        tdObj.appendChild(inputObj);
+                        //將tdObj新增到tdArr中
+                        tdArr.push(tdObj);
+                    }
+                }
+
+                return <div></div>
+            }
+        }
+
+        window.addEventListener("load", () => {
+            ReactDOM.render(<Member_input />, document.getElementById("member_input"))
+            ReactDOM.render(<List />, document.getElementById("list"))
+            ReactDOM.render(<Members />, document.getElementById("abc"))
+        })
+    </script>
+</head>
+
+<body>
+    <div class="table">
+        <div id="member_input"></div>
+        <div id="list"></div>
+        <div id='abc'></div>
+    </div>
+</body>
+
+</html>
