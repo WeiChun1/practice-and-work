@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
+    <title>first work</title>
     <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -20,6 +21,11 @@
             right: 0;
             border: 5px solid #FFFFFF;
             background-color: #F0F0F0;
+
+        }
+
+        table {
+            border-collapse: collapse;
         }
 
         body {
@@ -36,26 +42,42 @@
             overflow: auto;
         }
 
-        .top {
+        thead {
             background-color: #B8C1C8;
-            border-bottom: 1px solid #000000;
+            height: 30px;
+            font-weight: bold;
             position: sticky;
+            top: 0;
         }
 
-        .box {
+        thead>tr>td {
             border-right: 1px solid #000000;
+            border-bottom: 1px solid #000000;
             width: 60px;
             text-align: center;
         }
 
-        .box_name {
-            border-right: 1px solid #000000;
+        thead>tr>.box_name {
             width: 120px;
+        }
+
+        tbody>tr>td {
+            border-right: 1px solid #98A1A8;
+            border-bottom: 1px solid #98A1A8;
+            width: 60px;
             text-align: center;
         }
 
-        .box:last-child {
-            border: none
+        tbody>tr>.box_name {
+            width: 120px;
+        }
+
+        thead>tr>td:last-child {
+            border-right: none
+        }
+
+        tbody>tr>td:last-child {
+            border-right: none
         }
 
         .file {
@@ -64,21 +86,56 @@
             left: 30px
         }
 
+        #prize_input {
+            position: absolute;
+            top: 10px;
+            left: 330px
+        }
+
         input[type="file"] {
             color: transparent;
         }
 
         td {
             text-align: center;
-            margin:2px
+            height: 25px
         }
 
         tbody {
             background-color: white;
         }
 
-        tbody:first-child {
-            border-top: none
+        .prize {
+            border-radius: 5px;
+            border: 1px solid #000000;
+            width: 40%;
+            height: 400px;
+            background-color: #FFFFFF;
+            margin: 5%;
+            overflow: auto;
+            position: absolute;
+            left: 300px;
+            top: 22px;
+        }
+
+        .box_prize {
+            width: 175px
+        }
+
+        .box_amount {
+            width: 65px
+        }
+
+        .OK {
+            position: absolute;
+            top: 10px;
+            right: 30px
+        }
+
+        .enter {
+            position: absolute;
+            top: 10px;
+            left: 330px
         }
     </style>
     <script type="text/babel">
@@ -86,12 +143,12 @@
             render() {
                 let member = []
                 return <div className="list">
-                    <table className="top" align="center">
+                    <table>
                         <thead>
                             <tr>
-                                <td className="box">No.</td>
+                                <td>No.</td>
                                 <td className="box_name">name</td>
-                                <td className="box">Tier</td>
+                                <td>Tier</td>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -99,41 +156,93 @@
                 </div>
             }
         }
-
+        class Prize extends React.Component {
+            render() {
+                return <div className="prize">
+                    <table>
+                        <thead>
+                            <tr>
+                                <td className="box_prize">prize</td>
+                                <td className="box_amount">amount</td>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            }
+        }
         class Member_input extends React.Component {
             render() {
                 return <input type="file" name="file" id="file" className="file" />
             }
         }
+        
+        let tdArr_member = new Array()
+        let tdArr_prize = new Array()
+        let prize
+        let amount
+        function addprizeRow() {
+            let tbodyObj = document.getElementsByTagName("tbody")[1]
+            let trObj = document.createElement("tr")
+            tbodyObj.appendChild(trObj)
+            for (let i = 0; i < 2; i++) {
+                let tdObj = document.createElement("td")
+                trObj.appendChild(tdObj)
+                let inputObj = document.createElement("input")
+                inputObj.setAttribute("id", i)
+                inputObj.addEventListener("blur", function () {
+                    switch (this.id) {
+                        case "0":
+                            prize = this.value;
+                            break;
+                        case "1":
+                            amount = this.value;
+                            break;
+                    }
+                });
+                inputObj.style.height = "25px";
+                inputObj.style.margin = "0";
+                inputObj.style.border = "0";
+                inputObj.style.outline = "none";
+                if (i === 0) {
+                    inputObj.style.width = "160px";
+
+                } else {
+                    inputObj.style.width = "60px";
+                }
+                tdObj.appendChild(inputObj);
+
+                tdArr_prize.push(tdObj);
+            }
+        }
+        function saveData() {
+            tdArr_prize[0].innerHTML = prize
+            tdArr_prize[1].innerHTML = amount
+            tdArr_prize.length = 0;
+        }
         function addRow(name, tier, num) {
             let tbodyObj = document.getElementsByTagName("tbody")[0];
             let trObj = document.createElement("tr");
-            let tdArr = new Array();
+
             tbodyObj.appendChild(trObj);
 
             for (let i = 0; i < 3; i++) {
                 let tdObj = document.createElement("td");
                 trObj.appendChild(tdObj);
-
                 let inputObj = document.createElement("div");
-                if (i === 1) {
-                    inputObj.style.borderRight = "1 solid #000000"
-                    inputObj.style.width = "width: 120px"
-                } else {
-                    inputObj.style.border = "1 solid #000000"
-                    inputObj.style.width = "80px"
-                }
                 tdObj.appendChild(inputObj)
-                tdArr.push(tdObj);
+                tdArr_member.push(tdObj);
             }
-            tdArr[0].innerHTML = num
-            tdArr[1].innerHTML = name
-            tdArr[2].innerHTML = tier
+            tdArr_member[0].innerHTML = num
+            tdArr_member[1].innerHTML = name
+            tdArr_member[2].innerHTML = tier
             tdArr.length = 0;
         }
         window.addEventListener("load", () => {
             ReactDOM.render(<Member_input />, document.getElementById("member_input"))
             ReactDOM.render(<List />, document.getElementById("list"))
+            ReactDOM.render(<Prize />, document.getElementById("prize"))
+            
             document.getElementById("file").addEventListener("change", function () {
                 let file = this.files[0];
                 let reader = new FileReader();
@@ -157,13 +266,11 @@
 <body>
     <div class="table">
         <div id="member_input"></div>
-        <div id="list">
-        </div>
+        <div id="list"></div>
+        <button class="enter" type="button" onClick={addprizeRow()}>新增項目</button>
+        <button class="OK" type="button" onClick="saveData()">確定</button>
+        <div id="prize"></div>
     </div>
-    <script type="text/javascript">
-
-    </script>
-
 </body>
 
 </html>
