@@ -1,28 +1,73 @@
-nav{
-  display: flex;
+.table {
+  border-radius: 3%;
+  width: 600px;
+  height: 900px;
+  position: fixed;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border: 5px solid #FFFFFF;
+  background-color: #F0F0F0;
 }
-nav>.logo{
-  flex: none;width: 200px;
-  background-color: orange;
+
+body {
+  background-color: #1f1f23;
 }
-nav>.menu{
-  flex: auto;
-  background-color: chartreuse;
+
+.list {
+  border-radius: 5px;
+  border: 1px solid #000000;
+  width: 40%;
+  height: 400px;
+  background-color: #FFFFFF;
+  margin: 5%;
+  overflow: auto;
 }
-nav>.user{
-  flex: none;width: 200px;
-  background-color: palegoldenrod;
+
+.top {
+  background-color: #B8C1C8;
+  border-bottom: 1px solid #000000;
+  position: sticky;
 }
-main{
-  display: flex;flex-wrap: wrap;
-  justify-content: center;
-  background-color: gray;
-}
-main>.item{
-  flex: none;
-  width: 300px; margin: 15px;
+
+.box {
+  border-right: 1px solid #000000;
+  width: 60px;
   text-align: center;
-  background-color: burlywood;
+}
+
+.box_name {
+  border-right: 1px solid #000000;
+  width: 120px;
+  text-align: center;
+}
+
+.box:last-child {
+  border: none
+}
+
+.file {
+  position: relative;
+  top: 10px;
+  left: 30px
+}
+
+input[type="file"] {
+  color: transparent;
+}
+
+td {
+  text-align: center;
+}
+
+tbody {
+  background-color: white;
+}
+
+tbody:first-child {
+  border-top: none
 }
 @media (max-width:1200px){
   main>.item{
